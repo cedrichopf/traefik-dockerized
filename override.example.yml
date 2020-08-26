@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  traefik:
+    container_name: traefik # Remove if using multiple instances
+    networks:
+      - proxy # Change if you're using another network
+    labels:
+      # Traefik configuration for the dashboard
+      # Remove the labels section if the dashboard is disabled
+      - traefik.http.routers.traefik-http.rule=Host(`traefik.example.com`)
+      - traefik.http.routers.traefik-http.entrypoints=http
+      - traefik.http.routers.traefik-http.middlewares=redirect
+      - traefik.http.routers.traefik-https.rule=Host(`traefik.example.com`)
+      - traefik.http.routers.traefik-https.entrypoints=https
+      - traefik.http.routers.traefik-https.tls=true
+      - traefik.http.routers.traefik-http.service=api@internal
+      - traefik.http.routers.traefik-https.service=api@internal
+      - traefik.http.middlewares.redirect.redirectscheme.scheme=https
+
+networks:
+  # Change if you're using another network
+  proxy:
+    external: true
