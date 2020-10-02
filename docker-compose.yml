@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   traefik:
-    image: traefik:2.2
+    image: traefik:2.3
     restart: unless-stopped
     ports:
       - "80:80"
